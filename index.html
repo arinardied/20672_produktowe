@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>20672</title>
+    <style>
+        #viewer {
+            width: 100%;
+            height: 500px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+<div id="viewer"></div>
+<script>
+    const images = ['frame_0001.jpg', 'frame_0002.jpg', 'frame_0003.jpg', 'frame_0004.jpg', 'frame_0005.jpg',
+        'frame_0006.jpg', 'frame_0007.jpg', 'frame_0008.jpg', 'frame_0009.jpg', 'frame_0010.jpg'];
+    let index = 0;
+    const viewer = document.getElementById('viewer');
+
+    function updateImage() {
+        viewer.style.backgroundImage = `url(${images[index]})`;
+    }
+
+    updateImage();
+
+    viewer.addEventListener('mousemove', (event) => {
+        index = Math.floor((event.clientX / window.innerWidth) * images.length);
+        updateImage();
+    });
+
+    viewer.addEventListener('click', () => {
+        index = (index + 1) % images.length;
+        updateImage();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight') {
+            index = (index + 1) % images.length; // Następne zdjęcie
+        } else if (event.key === 'ArrowLeft') {
+            index = (index - 1 + images.length) % images.length; // Poprzednie zdjęcie
+        }
+        updateImage();
+    });
+</script>
+</body>
+</html>
